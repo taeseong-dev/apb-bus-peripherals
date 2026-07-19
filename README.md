@@ -27,7 +27,21 @@ RISC-V 기반 시스템에서 FPGA 동작을 검증한 프로젝트입니다.
 - APB Bus를 통해 BRAM, GPIO, FND, UART Peripheral 제어
 - Instruction ROM에 저장된 명령어를 실행하여 APB Peripheral 제어
 
+### APB Protocol
+
+<img src="images/apb_write.png" width="600">
+
+- Setup Phase에서 Address 및 Control Signal 설정
+- Access Phase에서 PENABLE을 활성화하여 Write 수행
+- PREADY가 High가 되면 Transaction 완료
+
 ### APB Master
+
+<img src="images/apb_read.png" width="600">
+
+- Setup Phase에서 Address 및 Control Signal 설정
+- Access Phase에서 Slave가 PRDATA를 출력
+- PREADY가 High가 되면 Transaction 완료
 
 <img src="images/apb_master_bd.png" width="500">
 
@@ -59,7 +73,7 @@ RISC-V 기반 시스템에서 FPGA 동작을 검증한 프로젝트입니다.
 
 ### GPIO
 
-<img src="images/apb_gpio.png" width="400">
+<img src="images/apb_gpio.png" width="500">
 
 - GPIO_CNTL Register를 이용하여 GPIO의 입출력 방향 제어
 - GPIO_ODATA 및 GPIO_IDATA Register를 통해 GPIO 데이터 송수신
@@ -67,7 +81,7 @@ RISC-V 기반 시스템에서 FPGA 동작을 검증한 프로젝트입니다.
 
 ### FND
 
-<img src="images/apb_fnd.png" width="400">
+<img src="images/apb_fnd.png" width="500">
 
 - APB Register를 통해 표시할 데이터 저장
 - FND Controller를 이용하여 4-Digit 7-Segment Display 제어
@@ -75,7 +89,7 @@ RISC-V 기반 시스템에서 FPGA 동작을 검증한 프로젝트입니다.
 
 ### UART
 
-<img src="images/apb_uart.png" width="500">
+<img src="images/apb_uart.png" width="600">
 
 - APB Register를 통해 Baud Rate 및 송수신 데이터 설정
 - Baud Tick Generator 기반 UART 통신 타이밍 생성
