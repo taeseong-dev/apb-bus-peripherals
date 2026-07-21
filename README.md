@@ -27,6 +27,11 @@ RISC-V 기반 시스템에서 FPGA 동작을 검증한 프로젝트입니다.
 - APB Bus를 통해 BRAM, GPIO, FND, UART Peripheral 제어
 - Instruction ROM에 저장된 명령어를 실행하여 APB Peripheral 제어
 
+<img src="images/apb_mem.png" width="300">
+
+- Memory-Mapped I/O 방식 사용
+- APB Master는 주소(Address)를 기반으로 BRAM 및 각 Peripheral을 선택하여 Read/Write를 수행
+
 ### APB Protocol
 
 <img src="images/apb_write.png" width="600">
