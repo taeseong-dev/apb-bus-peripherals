@@ -16,7 +16,6 @@ RISC-V 기반 시스템에서 FPGA 동작을 검증한 프로젝트입니다.
   - [GPIO](#gpio)
   - [UART](#uart)
   - [FND](#fnd)
-- [Software Flow](#software-flow)
 - [FPGA Test](#fpga-test)
 
 ## System Architecture
@@ -100,6 +99,12 @@ RISC-V 기반 시스템에서 FPGA 동작을 검증한 프로젝트입니다.
 - Baud Tick Generator 기반 UART 통신 타이밍 생성
 - TX/RX FSM을 이용하여 Serial 데이터 송수신
 
-## FPGA Verification
+## FPGA Test
 
-## Project Results
+### 동작 설명
+- Switch 입력을 1초 주기로 읽어 FND에 표시
+- 입력된 Switch 값에 따라 LED를 반전하며 Blink
+- 입력된 Switch 값을 UART를 통해 PC로 전송
+- ComportMaster를 통해 PC 데이터 수신 확인
+
+https://github.com/user-attachments/assets/ae2844d9-64f5-49a9-98fb-368255ccf311
