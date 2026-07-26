@@ -99,6 +99,38 @@ RISC-V 기반 시스템에서 FPGA 동작을 검증한 프로젝트입니다.
 - Baud Tick Generator 기반 UART 통신 타이밍 생성
 - TX/RX FSM을 이용하여 Serial 데이터 송수신
 
+## Simulation
+
+### BRAM
+
+<img src="images/apb_bram_sim.png" width="600">
+
+- BRAM 0번 address에 1의 값 write 및 read
+
+### GPIO
+
+<img src="images/apb_gpio_sim.png" width="600">
+
+- GPIO read (32'h0000_00a1)
+
+### FND
+
+<img src="images/apb_fnd_sim.png" width="600">
+
+- FND write (32'h0000_00a1)
+
+### UART
+
+<img src="images/apb_uart_sim1.png" width="800">
+
+- tx_busy read
+- tx_data(8'ha1) write
+
+<img src="images/apb_uart_sim2.png" width="800">
+
+- tx_start write
+- tx_busy read
+
 ## FPGA Test
 
 ### 동작 설명
