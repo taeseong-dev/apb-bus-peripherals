@@ -63,7 +63,7 @@ RV32I CPU와 연동하여 Simulation 및 FPGA 검증을 수행한 프로젝트�
 
 <img src="images/apb_write.png" width="600">
 
-- Setup Phase: Address와 Write Data를 출력하고 `PWRITE = 0`, `PSEL = 1`, `PENABLE = 0`
+- Setup Phase: Address와 Write Data를 출력하고 `PWRITE = 1`, `PSEL = 1`, `PENABLE = 0`
 - Access Phase: `PENABLE = 1`, `PREADY = 1`인 Rising Edge에서 Write Transaction 완료
 
 #### Read Transfer
@@ -125,16 +125,18 @@ RV32I CPU와 연동하여 Simulation 및 FPGA 검증을 수행한 프로젝트�
 - UART RX에서 수신한 `rx_data[7:0]`를 APB Read Data로 전달
 - `sr_reg` Read를 통해 `tx_busy`와 `rx_ready` 상태 확인
 
-## Simulation
+## APB Verification
 
-### BRAM
+### Simulation
+
+#### BRAM
 
 <img src="images/apb_bram_sim.png" width="600">
 
 - BRAM 0번 Address에 `32'd1` Write
 - BRAM 0번 Address에서 `32'd1` Read
 
-### GPIO
+#### GPIO
 
 <img src="images/apb_gpio_sim.png" width="600">
 
@@ -146,7 +148,7 @@ RV32I CPU와 연동하여 Simulation 및 FPGA 검증을 수행한 프로젝트�
 
 - FND ODATA Address에 `32'h0000_00A1` Write
 
-### UART
+#### UART
 
 <img src="images/apb_uart_sim1.png" width="800">
 
@@ -156,11 +158,11 @@ RV32I CPU와 연동하여 Simulation 및 FPGA 검증을 수행한 프로젝트�
 <img src="images/apb_uart_sim2.png" width="800">
 
 - UART CNTL Address에 `32'h0000_0001` Write하여 TX Start
-- UART SR Address에서 `32'h0000_0001` Read하여 TX Busy 확인
+- UART SR Address에서 `32'h0000_0001` Read하여 `tx_busy` 확인
 
-## FPGA Test
+### FPGA Test
 
-### 동작 설명
+#### 동작 설명
 - Switch 입력을 1초 주기로 읽어 FND에 표시
 - Switch 입력값을 반전하여 LED에 출력하고 Blink 동작 확인
 - Switch 입력값을 UART TX를 통해 PC로 전송
