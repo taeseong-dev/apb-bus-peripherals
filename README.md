@@ -9,7 +9,7 @@ RV32I CPU와 연동하여 Simulation 및 FPGA 검증을 수행한 프로젝트�
 
 | 항목 | 내용 |
 |:---|:---|
-| Language | Verilog |
+| Language | Verilog, SystemVerilog |
 | CPU | RV32I |
 | Bus | AMBA APB |
 | Peripherals | BRAM, GPIO, FND, UART |
