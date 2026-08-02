@@ -142,7 +142,7 @@ RV32I CPU와 연동하여 Simulation 및 FPGA 검증을 수행한 프로젝트�
 
 - GPIO IDATA Address에서 `32'h0000_00A1` Read
 
-### FND
+#### FND
 
 <img src="images/apb_fnd_sim.png" width="600">
 
