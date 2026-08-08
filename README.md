@@ -168,4 +168,4 @@ RV32I CPU와 연동하여 Simulation 및 FPGA 검증을 수행한 프로젝트�
 - Switch 입력값을 UART TX를 통해 PC로 전송
 - ComportMaster에서 UART Data 수신 확인
 
-[▶ APB Peripheral FPGA 동작 영상](https://github.com/user-attachments/assets/ae2844d9-64f5-49a9-98fb-368255ccf311)
+[▶ APB Peripheral FPGA 동작 영상](https://github.com/user-attachments/assets/51d14d51-2989-4ad2-ad91-493467bafe8f)
