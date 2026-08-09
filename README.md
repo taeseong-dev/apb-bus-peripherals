@@ -1,7 +1,7 @@
 # RISC-V-based APB Bus and Peripheral Design
 
-Verilog를 사용하여 APB Bus와 BRAM, GPIO, FND, UART Peripheral을 설계하고,<br>
-RV32I CPU와 연동하여 Simulation 및 FPGA 검증을 수행한 프로젝트입니다.
+Verilog/SystemVerilog를 사용하여 APB Bus와 BRAM, GPIO, FND, UART Peripheral을 설계하고, <br>
+RV32I CPU와 연동한 Simulation 및 FPGA 검증과 SystemVerilog/UVM 기반 APB 검증을 수행한 프로젝트입니다.
 
 ---
 
@@ -13,8 +13,8 @@ RV32I CPU와 연동하여 Simulation 및 FPGA 검증을 수행한 프로젝트�
 | CPU | RV32I |
 | Bus | AMBA APB |
 | Peripherals | BRAM, GPIO, FND, UART |
-| Verification | Simulation, FPGA |
-| Development Environment | Vivado |
+| Verification | Simulation, UVM, FPGA |
+| Development Environment | Vivado, VCS, Verdi |
 | FPGA Board | Basys3 |
 
 ---
@@ -32,6 +32,7 @@ RV32I CPU와 연동하여 Simulation 및 FPGA 검증을 수행한 프로젝트�
   - [UART](#uart)
 - [APB Verification](#apb-verification)
   - [Simulation](#simulation)
+  - [UVM Verification](#uvm-verification)
   - [FPGA Test](#fpga-test)
 
 ---
@@ -159,6 +160,41 @@ RV32I CPU와 연동하여 Simulation 및 FPGA 검증을 수행한 프로젝트�
 
 - UART CNTL Address에 `32'h0000_0001` Write하여 TX Start
 - UART SR Address에서 `32'h0000_0001` Read하여 `tx_busy` 확인
+
+### UVM Verification
+
+SystemVerilog/UVM을 사용하여 APB Master와 BRAM, GPIO, FND, UART Peripheral의 동작을 검증하였습니다.
+
+#### UVM Architecture
+
+- APB Sequence / Sequencer / Driver / Monitor / Agent 구성
+- GPIO 외부 입력 검증을 위한 GPIO Sequence / Driver / Monitor / Agent 구성
+- APB Monitor의 Transaction을 Scoreboard와 Coverage로 전달
+- Scoreboard에서 APB Master 및 Peripheral 동작 비교 검증
+
+#### UVM Test Result
+
+| Test              | Verification                                | Result | Coverage |
+| :---------------- | :------------------------------------------ | :----: | :------: |
+| `apb_random_test` | BRAM, GPIO, FND, UART Random Read/Write 검증 |  PASS  |  100.0%  |
+| `gpio_test`       | GPIO 외부 입력 및 IDATA Read 검증            |  PASS  |   50.0%  |
+| `uart_test`       | UART TX/RX Loopback 및 Status 검증           |  PASS  |   50.0%  |
+
+> `gpio_test`와 `uart_test`는 특정 Peripheral을 대상으로 수행하므로 APB 전체 Functional Coverage는 50.0%입니다.
+
+##### APB Random Test
+
+<img src="images/apb_uvm_random_test.png" width="700">
+
+##### GPIO Test
+
+<img src="images/apb_uvm_gpio_test.png" width="700">
+
+##### UART Test
+
+<img src="images/apb_uvm_uart_test.png" width="700">
+
+
 
 ### FPGA Test
 
