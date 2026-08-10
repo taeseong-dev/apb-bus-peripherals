@@ -1,7 +1,7 @@
 # RISC-V-based APB Bus and Peripheral Design
 
 Verilog/SystemVerilog를 사용하여 APB Bus와 BRAM, GPIO, FND, UART Peripheral을 설계하고, <br>
-RV32I CPU와 연동한 Simulation 및 FPGA 검증과 SystemVerilog/UVM 기반 APB 및 Peripheral 검증을 수행한 프로젝트입니다.
+RV32I CPU와 연동하여 Simulation 및 FPGA 검증을 수행하고, SystemVerilog/UVM 기반으로 APB 및 Peripheral 동작을 검증한 프로젝트입니다.
 
 ---
 
