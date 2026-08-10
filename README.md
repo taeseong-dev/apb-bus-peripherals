@@ -1,7 +1,7 @@
 # RISC-V-based APB Bus and Peripheral Design
 
 Verilog/SystemVerilog를 사용하여 APB Bus와 BRAM, GPIO, FND, UART Peripheral을 설계하고, <br>
-RV32I CPU와 연동한 Simulation 및 FPGA 검증과 SystemVerilog/UVM 기반 APB 검증을 수행한 프로젝트입니다.
+RV32I CPU와 연동한 Simulation 및 FPGA 검증과 SystemVerilog/UVM 기반 APB 및 Peripheral 검증을 수행한 프로젝트입니다.
 
 ---
 
@@ -167,34 +167,54 @@ SystemVerilog/UVM을 사용하여 APB Master와 BRAM, GPIO, FND, UART Peripheral
 
 #### UVM Architecture
 
+<img src="images/apb_uvm_bd.png" width="900">
+
 - APB Sequence / Sequencer / Driver / Monitor / Agent 구성
-- GPIO 외부 입력 검증을 위한 GPIO Sequence / Driver / Monitor / Agent 구성
+- GPIO 외부 입력 검증을 위한 GPIO Sequence / Sequencer / Driver / Monitor / Agent 구성
 - APB Monitor의 Transaction을 Scoreboard와 Coverage로 전달
-- Scoreboard에서 APB Master 및 Peripheral 동작 비교 검증
+- GPIO Monitor에서 GPIO Pin 입력값을 Scoreboard로 전달
 
-#### UVM Test Result
+#### APB Random Test
 
-| Test              | Verification                                | Result | Coverage |
-| :---------------- | :------------------------------------------ | :----: | :------: |
-| `apb_random_test` | BRAM, GPIO, FND, UART Random Read/Write 검증 |  PASS  |  100.0%  |
-| `gpio_test`       | GPIO 외부 입력 및 IDATA Read 검증            |  PASS  |   50.0%  |
-| `uart_test`       | UART TX/RX Loopback 및 Status 검증           |  PASS  |   50.0%  |
-
-> `gpio_test`와 `uart_test`는 특정 Peripheral을 대상으로 수행하므로 APB 전체 Functional Coverage는 50.0%입니다.
-
-##### APB Random Test
+- BRAM 및 GPIO, FND, UART에 Random Write/Read 수행
+- APB Master의 `PADDR`, `PWRITE`, `PWDATA`, `PSEL0`~`PSEL3` 및 Read Data 검증
 
 <img src="images/apb_uvm_random_test.png" width="700">
 
-##### GPIO Test
+#### GPIO Test
+
+- GPIO Control Register에 `16'hFF00`을 Write하여 `GPIO[7:0]`을 Input으로 설정
+- Random GPIO Pin Data를 인가한 후 IDATA Register Read
+- GPIO Pin 입력값과 IDATA Read Data를 Scoreboard에서 비교 검증
 
 <img src="images/apb_uvm_gpio_test.png" width="700">
 
-##### UART Test
+#### UART Test
+
+- Random Baud 및 TX Data 설정 후 UART TX Start
+- Status Register를 Polling하여 `tx_busy`와 `rx_ready` 상태 확인
+- TX/RX Loopback을 통해 수신한 RXDATA와 전송한 TXDATA를 Scoreboard에서 비교 검증
+- RXDATA Read 이후 `rx_ready` Clear 동작 확인
 
 <img src="images/apb_uvm_uart_test.png" width="700">
 
+#### Functional Coverage
 
+APB Monitor에서 수집한 Transaction을 기준으로 Functional Coverage를 확인하였습니다.
+
+- Read / Write Operation
+- BRAM / GPIO / FND / UART Slave Select
+- Operation × Slave Select Cross Coverage
+
+#### UVM Test Result
+
+| Test              | Result | APB Functional Coverage |
+| :---------------- | :----: | :---------------------: |
+| `apb_random_test` |  PASS  |         100.0%          |
+| `gpio_test`       |  PASS  |          50.0%          |
+| `uart_test`       |  PASS  |          50.0%          |
+
+> `gpio_test`와 `uart_test`는 특정 Peripheral만을 대상으로 수행하므로 Slave Select 및 Cross Coverage가 일부만 충족되어 APB Functional Coverage는 50.0%입니다.
 
 ### FPGA Test
 
